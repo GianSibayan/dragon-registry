@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dragon Registry — Berk</title>
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --parchment: #f2e8c9;
+      --parchment-dark: #e0cc99;
+      --ink: #2a1a0a;
+      --gold: #c9952a;
+      --gold-light: #e8b84b;
+      --gold-dark: #8a6010;
+      --ember: #c23a1a;
+      --ember-light: #e85a2a;
+      --wood: #5c3317;
+      --wood-light: #7a4a22;
+      --shadow: rgba(42, 26, 10, 0.4);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #1a0e05;
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(139, 69, 19, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(201, 149, 42, 0.1) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238B4513' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      font-family: 'Crimson Text', Georgia, serif;
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      position: relative;
+    }
+
+    .header-ornament {
+      color: var(--gold);
+      font-size: 1.5rem;
+      letter-spacing: 0.5rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.7;
+      animation: fadeIn 1s ease;
+    }
+
+    header h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 900;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      color: var(--gold-light);
+      text-shadow:
+        0 0 30px rgba(201, 149, 42, 0.5),
+        0 2px 4px rgba(0,0,0,0.8),
+        0 0 60px rgba(201, 149, 42, 0.2);
+      letter-spacing: 0.05em;
+      line-height: 1.1;
+      animation: fadeIn 1.2s ease;
+    }
+
+    header p.subtitle {
+      font-family: 'Crimson Text', serif;
+      font-style: italic;
+      color: var(--parchment-dark);
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+      opacity: 0.8;
+      animation: fadeIn 1.4s ease;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.5rem auto;
+      max-width: 600px;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    .divider-rune {
+      color: var(--gold);
+      font-size: 1.2rem;
+    }
+
+    /* MAIN LAYOUT */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+    }
+
+    /* PARCHMENT CARD */
+    .parchment {
+      background: var(--parchment);
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+      border-radius: 4px;
+      box-shadow:
+        0 0 0 1px var(--gold-dark),
+        0 0 0 3px var(--wood),
+        0 8px 32px rgba(0,0,0,0.6),
+        inset 0 0 60px rgba(201, 149, 42, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .parchment::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at top left, rgba(201,149,42,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(139,69,19,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .parchment-header {
+      background: linear-gradient(135deg, var(--wood) 0%, var(--wood-light) 50%, var(--wood) 100%);
+      padding: 1rem 1.5rem;
+      border-bottom: 2px solid var(--gold-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .parchment-header h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      color: var(--gold-light);
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .parchment-header .icon {
+      font-size: 1.3rem;
+    }
+
+    /* DRAGON LIST */
+    #dragon-list {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-height: 200px;
+    }
+
+    .dragon-card {
+      background: rgba(255,255,255,0.4);
+      border: 1px solid var(--gold-dark);
+      border-radius: 3px;
+      padding: 1.25rem;
+      position: relative;
+      transition: all 0.3s ease;
+      animation: slideIn 0.4s ease;
+    }
+
+    .dragon-card:hover {
+      background: rgba(255,255,255,0.6);
+      box-shadow: 0 4px 16px rgba(139,69,19,0.2);
+      transform: translateY(-2px);
+    }
+
+    .dragon-card::before {
+      content: '🐉';
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      opacity: 0.6;
+    }
+
+    .dragon-name {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--wood);
+      margin-bottom: 0.25rem;
+    }
+
+    .dragon-species {
+      font-style: italic;
+      color: var(--gold-dark);
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .dragon-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem 1rem;
+      font-size: 0.92rem;
+    }
+
+    .dragon-detail {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: var(--wood);
+      min-width: 60px;
+    }
+
+    .detail-value {
+      color: var(--ink);
+    }
+
+    .dragon-abilities {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--gold-dark);
+      font-size: 0.92rem;
+    }
+
+    .dragon-abilities .detail-label {
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .delete-btn {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: none;
+      border: 1px solid var(--ember);
+      color: var(--ember);
+      font-family: 'Crimson Text', serif;
+      font-size: 0.85rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .delete-btn:hover {
+      background: var(--ember);
+      color: white;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--wood-light);
+      font-style: italic;
+      font-size: 1.1rem;
+    }
+
+    .empty-state .empty-icon {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    /* FORM */
+    .form-parchment {
+      position: sticky;
+      top: 1.5rem;
+    }
+
+    .form-body {
+      padding: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+
+    label {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--wood);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.35rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid var(--gold-dark);
+      border-radius: 2px;
+      padding: 0.5rem 0.75rem;
+      font-family: 'Crimson Text', serif;
+      font-size: 1rem;
+      color: var(--ink);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      background: rgba(255,255,255,0.9);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(201,149,42,0.2);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    select {
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+      border: 2px solid var(--gold-dark);
+      color: var(--ink);
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      padding: 0.75rem;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: all 0.3s ease;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+      box-shadow: 0 4px 12px rgba(139,96,16,0.4);
+    }
+
+    .submit-btn:hover {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(139,96,16,0.5);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    /* TOAST */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--wood);
+      color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 3px;
+      border: 1px solid var(--gold-dark);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* LOADING */
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: var(--wood-light);
+      font-style: italic;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--gold-dark);
+      font-style: italic;
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-ornament">⚔ ᚦ ᚱ ᚨ ᚷ ᛟ ᚾ ⚔</div>
+    <h1>Dragon Registry</h1>
+    <p class="subtitle">The Official Record of Dragons — Isle of Berk</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-rune">🔥</div>
+      <div class="divider-line"></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- DRAGON LIST -->
+    <div class="parchment">
+      <div class="parchment-header">
+        <span class="icon">📜</span>
+        <h2>Registered Dragons</h2>
+      </div>
+      <div id="dragon-list">
+        <div class="loading">Consulting the ancient scrolls...</div>
+      </div>
+    </div>
+
+    <!-- ADD FORM -->
+    <div class="parchment form-parchment">
+      <div class="parchment-header">
+        <span class="icon">✍️</span>
+        <h2>Register a Dragon</h2>
+      </div>
+      <div class="form-body">
+        <form id="dragon-form">
+          <div class="form-group">
+            <label>Dragon Name</label>
+            <input type="text" id="name" placeholder="e.g. Toothless" required />
+          </div>
+          <div class="form-group">
+            <label>Species</label>
+            <input type="text" id="species" placeholder="e.g. Night Fury" required />
+          </div>
+          <div class="form-group">
+            <label>Owner / Rider</label>
+            <input type="text" id="owner" placeholder="e.g. Hiccup" required />
+          </div>
+          <div class="form-group">
+            <label>Diet</label>
+            <input type="text" id="diet" placeholder="e.g. Fish" required />
+          </div>
+          <div class="form-group">
+            <label>Habitat</label>
+            <input type="text" id="habitat" placeholder="e.g. Hidden World" required />
+          </div>
+          <div class="form-group">
+            <label>Size</label>
+            <select id="size" required>
+              <option value="">— Select Size —</option>
+              <option value="Small">Small</option>
+              <option value="Medium">Medium</option>
+              <option value="Large">Large</option>
+              <option value="Massive">Massive</option>
+              <option value="Titan Wing">Titan Wing</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Abilities</label>
+            <textarea id="abilities" placeholder="e.g. Plasma blast, echolocation, supersonic flight" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">⚔ Enlist Dragon ⚔</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    "A dragon is not a slave." — Valka &nbsp;·&nbsp; Isle of Berk Dragon Registry
+    <br><br>
+    <a href="/dragons/" style="color: var(--gold-dark); font-size: 0.85rem; opacity: 0.7;">⚙ Switch to API view</a>
+  </footer>
+
+  <div id="toast"></div>
+
+  <script>
+    const API = '/dragons/';
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    async function loadDragons() {
+      const list = document.getElementById('dragon-list');
+      try {
+        const res = await fetch(API, { headers: { 'Accept': 'application/json' } });
+        const dragons = await res.json();
+        if (dragons.length === 0) {
+          list.innerHTML = `<div class="empty-state"><span class="empty-icon">🐉</span>No dragons registered yet.<br>Be the first to enlist one!</div>`;
+          return;
+        }
+        list.innerHTML = dragons.map(d => `
+          <div class="dragon-card" id="dragon-${d.id}">
+            <div class="dragon-name">${d.name}</div>
+            <div class="dragon-species">${d.species}</div>
+            <div class="dragon-details">
+              <div class="dragon-detail"><span class="detail-label">Owner:</span><span class="detail-value">${d.owner}</span></div>
+              <div class="dragon-detail"><span class="detail-label">Size:</span><span class="detail-value">${d.size}</span></div>
+              <div class="dragon-detail"><span class="detail-label">Diet:</span><span class="detail-value">${d.diet}</span></div>
+              <div class="dragon-detail"><span class="detail-label">Habitat:</span><span class="detail-value">${d.habitat}</span></div>
+            </div>
+            <div class="dragon-abilities">
+              <span class="detail-label">Abilities:</span> ${d.abilities}
+            </div>
+            <button class="delete-btn" onclick="deleteDragon(${d.id})">✕ Remove</button>
+          </div>
+        `).join('');
+      } catch (e) {
+        list.innerHTML = `<div class="empty-state">Failed to load dragons. Is the server running?</div>`;
+      }
+    }
+
+    async function deleteDragon(id) {
+      if (!confirm('Remove this dragon from the registry?')) return;
+      await fetch(`${API}${id}`, {
+        method: 'DELETE',
+        headers: { 'X-CSRFToken': getCookie('csrftoken') }
+      });
+      showToast('Dragon removed from the registry.');
+      loadDragons();
+    }
+
+    document.getElementById('dragon-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById('name').value,
+        species: document.getElementById('species').value,
+        owner: document.getElementById('owner').value,
+        diet: document.getElementById('diet').value,
+        habitat: document.getElementById('habitat').value,
+        size: document.getElementById('size').value,
+        abilities: document.getElementById('abilities').value,
+      };
+      const res = await fetch(API, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'),
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        e.target.reset();
+        showToast('🐉 Dragon enlisted successfully!');
+        loadDragons();
+      } else {
+        showToast('Failed to register dragon. Check all fields.');
+      }
+    });
+
+    function getCookie(name) {
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : '';
+    }
+
+    loadDragons();
+  </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+Django
+djangorestframework
+environs
+gunicorn
+whitenoise
+dj-database-url

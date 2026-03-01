@@ -4,3 +4,4 @@ environs
 gunicorn
 whitenoise
 dj-database-url
+mysqlclient
